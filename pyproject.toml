@@ -1,0 +1,8 @@
+[project]
+name = "Patient data analyse"
+description = "Analyzing efficiency of patient therapies based on data in an Excel file and exporting computed results in CSV files"
+dependencies = [
+    "pandas",
+    "openpyxl",
+]
+requires-python = ">= 3.12"
