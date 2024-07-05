@@ -31,10 +31,6 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
         "ASL_APPARTENENZA",
     ]
 
-    # Keep minsan column if data is mixed
-    if mixed_minsan:
-        output_data["MINSAN"] = input_data_grouped_by_user["MINSAN"].first().values
-
     # Retrieve the first and last delivery for DT_EROG and cast them to datetimes
     output_data["DATA PRIMA CONSEGNA"] = pandas.to_datetime(input_data_grouped_by_user["DT_EROG"].min().values)
     output_data["DATA ULTIMA CONSEGNA"] = pandas.to_datetime(input_data_grouped_by_user["DT_EROG"].max().values)
