@@ -7,6 +7,7 @@ from functions.compute_follow_up_persistency import compute_follow_up_persistenc
 from functions.compute_minsan_changes import compute_minsan_changes
 from functions.compute_persistency import compute_persistency
 from functions.round_n import round_n
+from functions.sum_importomov import sum_importomov
 
 
 def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
@@ -65,6 +66,8 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
 
     output_data["PERSISTENZA"] = input_data_grouped_by_user.apply(compute_persistency).values
     output_data["Persistenza di Follow-up"] = input_data_grouped_by_user.apply(compute_follow_up_persistency).values
+
+    output_data["IMPORTOMOV"] = input_data_grouped_by_user.apply(sum_importomov, include_groups=False).values
 
     # Format dates before exporting data
     output_data["DT_NAS"] = output_data["DT_NAS"].dt.strftime("%d/%m/%Y")
