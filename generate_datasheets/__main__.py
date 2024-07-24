@@ -1,12 +1,12 @@
 import pandas
 
-from functions.compute_ouptput_data import compute_dataframe_for_minsan
+from compute_ouptput_data import compute_dataframe_for_minsan
 
 
 EXPORT_MINSAN_FILES = False
 
 if __name__ == "__main__":
-    input_file = "V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"
+    input_file = "./V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"
 
     # Read the input file
     input_data = pandas.read_excel(input_file, parse_dates=["DT_EROG", "DT_NAS"], date_format="%d/%m/%Y")

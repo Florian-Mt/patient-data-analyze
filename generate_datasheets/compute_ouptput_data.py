@@ -1,14 +1,14 @@
 import pandas
 
-from functions.compute_adherence_numerator import compute_adherence_numerator
-from functions.compute_average_days import compute_average_days
-from functions.compute_delays import compute_delays
-from functions.compute_follow_up_persistence import compute_follow_up_persistence
-from functions.compute_minsan_changes import compute_minsan_changes
-from functions.compute_persistence import compute_persistence
-from functions.first_prod import first_prod
+from compute_adherence_numerator import compute_adherence_numerator
+from compute_average_days import compute_average_days
+from compute_delays import compute_delays
+from compute_follow_up_persistence import compute_follow_up_persistence
+from compute_minsan_changes import compute_minsan_changes
+from compute_persistence import compute_persistence
+from first_prod import first_prod
 from functions.round_n import round_n
-from functions.sum_importomov import sum_importomov
+from sum_importomov import sum_importomov
 
 
 def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
