@@ -6,6 +6,7 @@ from functions.compute_delays import compute_delays
 from functions.compute_follow_up_persistency import compute_follow_up_persistency
 from functions.compute_minsan_changes import compute_minsan_changes
 from functions.compute_persistency import compute_persistency
+from functions.first_prod import first_prod
 from functions.round_n import round_n
 from functions.sum_importomov import sum_importomov
 
@@ -69,9 +70,15 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
 
     output_data["IMPORTOMOV"] = input_data_grouped_by_user.apply(sum_importomov, include_groups=False).values
 
+    output_data["PRIMO_PROD"] = input_data_grouped_by_user.apply(first_prod).values
+
     # Format dates before exporting data
     output_data["DT_NAS"] = output_data["DT_NAS"].dt.strftime("%d/%m/%Y")
     output_data["DATA PRIMA CONSEGNA"] = output_data["DATA PRIMA CONSEGNA"].dt.strftime("%d/%m/%Y")
     output_data["DATA ULTIMA CONSEGNA"] = output_data["DATA ULTIMA CONSEGNA"].dt.strftime("%d/%m/%Y")
+
+    # Remove rows having adherence too high
+    unacceptable_rows_indices = output_data[output_data["ADERENZA"] >= 560].index
+    output_data.drop(unacceptable_rows_indices, inplace=True)
 
     return output_data
