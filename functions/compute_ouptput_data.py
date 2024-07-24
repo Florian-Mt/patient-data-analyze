@@ -3,9 +3,9 @@ import pandas
 from functions.compute_adherence_numerator import compute_adherence_numerator
 from functions.compute_average_days import compute_average_days
 from functions.compute_delays import compute_delays
-from functions.compute_follow_up_persistency import compute_follow_up_persistency
+from functions.compute_follow_up_persistence import compute_follow_up_persistence
 from functions.compute_minsan_changes import compute_minsan_changes
-from functions.compute_persistency import compute_persistency
+from functions.compute_persistence import compute_persistence
 from functions.first_prod import first_prod
 from functions.round_n import round_n
 from functions.sum_importomov import sum_importomov
@@ -65,8 +65,8 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
     output_data["INTERMEDIA ADERENZA"] = ((40 <= adherence) & (adherence < 80)).astype(int)
     output_data["ALTA ADERENZA"] = (adherence >= 80).astype(int)
 
-    output_data["PERSISTENZA"] = input_data_grouped_by_user.apply(compute_persistency).values
-    output_data["Persistenza di Follow-up"] = input_data_grouped_by_user.apply(compute_follow_up_persistency).values
+    output_data["PERSISTENZA"] = input_data_grouped_by_user.apply(compute_persistence).values
+    output_data["Persistenza di Follow-up"] = input_data_grouped_by_user.apply(compute_follow_up_persistence).values
 
     output_data["IMPORTOMOV"] = input_data_grouped_by_user.apply(sum_importomov, include_groups=False).values
 

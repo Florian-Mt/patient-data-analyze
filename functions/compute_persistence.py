@@ -1,7 +1,7 @@
 from datetime import datetime
 
 
-def compute_persistency(group):
+def compute_persistence(group):
     count = 0
 
     for i in range(1, len(group["DT_EROG"])):
