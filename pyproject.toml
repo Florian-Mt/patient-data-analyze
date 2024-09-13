@@ -6,3 +6,12 @@ dependencies = [
     "openpyxl",
 ]
 requires-python = ">= 3.12"
+
+[project.llm]
+llm = [
+    "bitsandbytes",
+    "datasets",
+    "peft",
+    "torch",
+    "transformers",
+]
