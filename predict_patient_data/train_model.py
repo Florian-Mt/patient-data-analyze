@@ -12,13 +12,14 @@ def train_model(
     tokenizer,
     tokenized_train_dataset: Dataset,
     tokenized_eval_dataset: Dataset,
+    output_directory: str,
 ):
     if torch.cuda.device_count() > 1: # If more than 1 GPU
         model.is_parallelizable = True
         model.model_parallel = True
 
     run_name = base_model_id + "-" + "finetuned"
-    output_dir = os.path.join(os.getcwd(), run_name)
+    output_dir = os.path.join(output_directory, run_name)
 
     tokenizer.pad_token = tokenizer.eos_token
 

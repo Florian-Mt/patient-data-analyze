@@ -9,6 +9,7 @@ from compute_patient_data.compute_output_data import compute_dataframe_for_minsa
 from utils.dir_path import dir_path
 from utils.round_n import round_n
 
+
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
 
@@ -20,7 +21,7 @@ def getargs():
         type=argparse.FileType("r"),
         dest="input_file",
         metavar="<input data file>",
-        help="Number of individuals in each population"
+        help="Input patients' data file",
     )
     parser.add_argument(
         "-o", "--output-dir",
@@ -29,13 +30,13 @@ def getargs():
         default=os.path.join(os.getcwd(), "output"),
         dest="output_directory",
         metavar="<output directory>",
-        help="Output directory for computed datasheets"
+        help="Output directory for computed datasheets",
     )
     parser.add_argument(
         "-g", "--only-global",
         action="store_false",
         dest="export_minsan_files",
-        help="Also export a specific datasheet for each drug"
+        help="Also export a specific datasheet for each drug",
     )
     return parser.parse_args()
 

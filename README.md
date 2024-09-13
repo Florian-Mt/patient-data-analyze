@@ -28,7 +28,7 @@ An equivalent non-Colab version is available (GPU required):
 * Provide `HF_TOKEN` as an environment variable
   * For example with Bash: `export HF_TOKEN=<your_token>`
   * Or as an IDE environment configuration
-* Run `python finetune_llm.py`
-  * Output file required
+* Run `python finetune_llm.py -f <input_file>`
+  * For example, with the previously generated output file: `python finetune_llm.py -f output/output_global.csv`
 
 ## Using the fine-tuned model
