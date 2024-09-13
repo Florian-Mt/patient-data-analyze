@@ -32,8 +32,8 @@ def getargs():
         help="Output directory for computed datasheets"
     )
     parser.add_argument(
-        "-m",
-        action="store_true",
+        "-g", "--only-global",
+        action="store_false",
         dest="export_minsan_files",
         help="Also export a specific datasheet for each drug"
     )
