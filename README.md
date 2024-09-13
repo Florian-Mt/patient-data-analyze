@@ -6,6 +6,7 @@ This project aims to determine if an LLM can predict data on patients' treatment
 
 * Use a recent version of Python (3.12 recommended)
 * Create a Python virtual environment: `python -m venv venv`
+* Activate your virtual environment: `source ./venv/bin/activate`
 * Install required dependencies: `pip install .` (or `python -m pip install .`)
 
 ## Computing data on patients
