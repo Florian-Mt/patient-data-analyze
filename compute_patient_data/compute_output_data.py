@@ -1,6 +1,6 @@
 import pandas
 
-from functions.round_n import round_n
+from utils.round_n import round_n
 from .compute_adherence_numerator import compute_adherence_numerator
 from .compute_average_days import compute_average_days
 from .compute_delays import compute_delays

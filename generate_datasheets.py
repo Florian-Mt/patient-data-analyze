@@ -5,9 +5,9 @@ import time
 
 import pandas
 
-from generate_datasheets.compute_ouptput_data import compute_dataframe_for_minsan
-from functions.dir_path import dir_path
-from functions.round_n import round_n
+from compute_patient_data.compute_output_data import compute_dataframe_for_minsan
+from utils.dir_path import dir_path
+from utils.round_n import round_n
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
