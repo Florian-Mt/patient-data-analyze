@@ -1,6 +1,6 @@
 [project]
 name = "Patient data analyse"
-description = "Analyzing efficiency of patient therapies based on data in an Excel file and exporting computed results in CSV files"
+description = "Analyzing efficiency of patient therapies based on data in an Excel file and exporting computed results in CSV files, then fine-tuning an LLM to predict adherence and follow-up persistence of treatments on patients based on their demographic information"
 dependencies = [
     "pandas",
     "openpyxl",
