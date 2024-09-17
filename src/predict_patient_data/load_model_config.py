@@ -1,10 +1,19 @@
-from peft import prepare_model_for_kbit_training
-from peft import LoraConfig, get_peft_model
+"""
+Load model and create configuration
+"""
+
 import torch
+from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import AutoModelForCausalLM, BitsAndBytesConfig
 
 
 def load_model_config(base_model_id: str):
+    """
+    Load model and create configuration
+    :param base_model_id: model id
+    :return: configured model
+    """
+
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_use_double_quant=True,

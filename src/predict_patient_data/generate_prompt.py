@@ -1,4 +1,14 @@
+"""
+Generate prompt based on provided patient data
+"""
+
+
 def generate_prompt(patient):
+    """
+    Generate prompt based on provided patient's data
+    :param patient: patient's data
+    :return: generated prompt
+    """
     full_prompt = f"""<s>[INST]Considering the sex, birth date, birth city, residence city and first drug to take of a
     patient, all information given line by line and formatted as 'label: value', the whole block of lines being enclosed
     by triple single quotes, predict the values for adherence and follow-up persistence.

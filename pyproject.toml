@@ -29,3 +29,23 @@ quality = [
     "pylint",
 ]
 test = ["pytest"]
+
+[tool.black]
+exclude = "\\.venv|venv"
+# See https://black.readthedocs.io/en/stable/the_black_code_style/current_style.html#line-length
+line-length = 120
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 120  # Probable bug: should reuse black.line-length
+
+[tool.mypy]
+exclude = [".venv", "venv"]
+
+[tool.pylint]
+max-line-length = 120
+disable = ["logging-fstring-interpolation"]
+
+[tool.setuptools]
+py-modules = []

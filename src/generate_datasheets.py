@@ -1,3 +1,7 @@
+"""
+Generate datasheets of computed data for each patient in the base file
+"""
+
 import argparse
 import logging
 import os
@@ -9,10 +13,11 @@ from compute_patient_data.compute_output_data import compute_dataframe_for_minsa
 from utils.dir_path import dir_path
 
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
-
 def getargs():
+    """
+    Define and parse command line arguments
+    :return: command line arguments
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-f", "--file",
@@ -39,6 +44,9 @@ def getargs():
     )
     return parser.parse_args()
 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
     args = getargs()

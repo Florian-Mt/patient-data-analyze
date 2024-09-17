@@ -1,7 +1,18 @@
+"""
+Compute the number of delays between treatments for each patient in the group
+"""
+
 from datetime import datetime
 
+from pandas import DataFrame
 
-def compute_delays(group):
+
+def compute_delays(group: DataFrame):
+    """
+    Compute the number of delays between treatments for each patient in the group
+    :param group: group
+    :return: number of delays between treatments for each patient in the group
+    """
     count = 0
 
     for i in range(len(group["DT_EROG"]) - 1):

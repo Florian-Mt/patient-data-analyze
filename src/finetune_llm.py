@@ -1,3 +1,7 @@
+"""
+Fine-tune a LLM on patient's data
+"""
+
 import argparse
 import logging
 import os
@@ -17,10 +21,11 @@ from utils.dir_path import dir_path
 BASE_MODEL_ID = "mistralai/Mistral-7B-v0.1"
 
 
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
-
 def getargs():
+    """
+    Define and parse command line arguments
+    :return: command line arguments
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "-f", "--file",
@@ -41,6 +46,9 @@ def getargs():
     )
     return parser.parse_args()
 
+
+logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.INFO)
 
 if __name__ == "__main__":
     # Based on https://colab.research.google.com/drive/1EbjBoSCTLW23b-9Ls0p5XiifOsTWuVul

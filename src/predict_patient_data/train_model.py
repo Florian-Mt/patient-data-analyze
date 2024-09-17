@@ -1,9 +1,13 @@
-from datetime import datetime
-import os
+"""
+Train (fine-tune) the model with the provided train and eval datasets
+"""
 
+import os
+from datetime import datetime
+
+import torch
 from datasets import Dataset
 from transformers import DataCollatorForLanguageModeling, Trainer, TrainingArguments
-import torch
 
 
 def train_model(
@@ -14,7 +18,17 @@ def train_model(
     tokenized_eval_dataset: Dataset,
     output_directory: str,
 ):
-    if torch.cuda.device_count() > 1: # If more than 1 GPU
+    """
+    Train (fine-tune) the model with the provided train and eval datasets
+    :param base_model_id: model id
+    :param model: base model
+    :param tokenizer: model's tokenizer
+    :param tokenized_train_dataset: train dataset
+    :param tokenized_eval_dataset: eval dataset
+    :param output_directory: output directory to save the progress and final trained model
+    """
+
+    if torch.cuda.device_count() > 1:  # If more than 1 GPU
         model.is_parallelizable = True
         model.model_parallel = True
 

@@ -1,7 +1,18 @@
+"""
+Compute persistence of a treatment for each patient in the group
+"""
+
 from datetime import datetime
 
+from pandas import DataFrame
 
-def compute_persistence(group):
+
+def compute_persistence(group: DataFrame):
+    """
+    Compute persistence of a treatment for each patient in the group
+    :param group: group
+    :return: persistence of a treatment for each patient in the group
+    """
     count = 0
 
     for i in range(1, len(group["DT_EROG"])):

@@ -1,7 +1,18 @@
+"""
+Compute the average duration of a treatment for each patient in the group
+"""
+
 from datetime import datetime
 
+from pandas import DataFrame
 
-def compute_average_days(group):
+
+def compute_average_days(group: DataFrame):
+    """
+    Compute the average duration of a treatment for each patient in the group
+    :param group: group
+    :return: average duration of a treatment for each patient in the group
+    """
     total_days = 0
     total_intervals = 0
 

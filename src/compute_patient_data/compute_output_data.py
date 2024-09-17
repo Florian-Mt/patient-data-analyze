@@ -1,4 +1,9 @@
+"""
+Compute an output dataframe for the provided patients' dataframe
+"""
+
 import pandas
+from pandas import DataFrame
 
 from .compute_adherence_numerator import compute_adherence_numerator
 from .compute_average_days import compute_average_days
@@ -10,8 +15,14 @@ from .first_prod import first_prod
 from .sum_importomov import sum_importomov
 
 
-def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
-    # Group input_data for each user
+def compute_dataframe_for_minsan(input_data: DataFrame, mixed_minsan=False):
+    """
+    Compute an output dataframe for the provided patients' dataframe
+    :param input_data: patients' dataframe
+    :param mixed_minsan: whether or not the patients' data is filtered on a specific MINSAN
+    :return: ouput dataframe
+    """
+    # Group input_data lines by patient unique identifier
     input_data_grouped_by_user = input_data.groupby("CODICE PAZIENTE UNIVOCO")
 
     output_data = input_data_grouped_by_user.agg({
@@ -76,7 +87,7 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
     output_data["DATA PRIMA CONSEGNA"] = output_data["DATA PRIMA CONSEGNA"].dt.strftime("%d/%m/%Y")
     output_data["DATA ULTIMA CONSEGNA"] = output_data["DATA ULTIMA CONSEGNA"].dt.strftime("%d/%m/%Y")
 
-    # Remove rows having adherence too high
+    # Remove rows having adherence too high, with an arbitrary threshold of 560
     unacceptable_rows_indices = output_data[output_data["ADERENZA"] >= 560].index
     output_data.drop(unacceptable_rows_indices, inplace=True)
 

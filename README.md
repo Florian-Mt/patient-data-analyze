@@ -11,7 +11,7 @@ This project aims to determine if an LLM can predict data on patients' treatment
 
 ## Computing data on patients
 
-Run `python generate_datasheets.py -f <YOUR_DATA_FILE.xlsx>`. For example, with the provided training file: `python generate_datasheets.py -f "./data/V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"`
+Run `python src/generate_datasheets.py -f <YOUR_DATA_FILE.xlsx>`. For example, with the provided training file: `python src/generate_datasheets.py -f "./data/V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"`
 
 The generated datasheets will be in the `output` folder by default. Use `-o <path>` or `--output-dir <path>` to change output directory. The path is created if necessary.
 
@@ -25,11 +25,25 @@ To run it again, upload the `output_global.csv` to your Drive home directory and
 
 An equivalent non-Colab version is available (GPU required):
 
-* Install required dependencies: `pip install .[llm]`
+* Install required dependencies: `pip install ".[llm]"`
 * Provide `HF_TOKEN` as an environment variable
   * For example with Bash: `export HF_TOKEN=<your_token>`
   * Or as an IDE environment configuration
 * Run `python finetune_llm.py -f <input_file>`
-  * For example, with the previously generated output file: `python finetune_llm.py -f output/output_global.csv`
+  * For example, with the previously generated output file: `python src/finetune_llm.py -f output/output_global.csv`
 
-## Using the fine-tuned model
+## Using the fine-tuned model to make predictions
+
+## Evaluate the prediction
+
+## Code quality commands
+
+First run `pip install ".[quality]"`.
+
+* `black --diff .`
+* `flake8 --exclude=venv --max-line-length=120 .`
+* `isort --check --diff .`
+* `MYPYPATH=src mypy .`
+* `pylint src`
+
+Default configurations are provided in `pyproject.toml` for most of those tools.
