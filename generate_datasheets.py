@@ -7,7 +7,6 @@ import pandas
 
 from compute_patient_data.compute_output_data import compute_dataframe_for_minsan
 from utils.dir_path import dir_path
-from utils.round_n import round_n
 
 
 logger = logging.getLogger(__name__)
@@ -56,7 +55,7 @@ if __name__ == "__main__":
     output_file = os.path.join(args.output_directory, "output_global.csv")
     output_data.to_csv(output_file, index=False)
     end = time.time()
-    logger.info(f"Output computed for all drugs in {round_n(end - start, 3)} s.")
+    logger.info(f"Output computed for all drugs in {round(end - start, 3)} s.")
     logger.info(f"Results written in {output_file}.")
 
     if args.export_minsan_files:
@@ -68,5 +67,5 @@ if __name__ == "__main__":
             output_file = os.path.join(args.output_directory, f"output_{minsan_code}.csv")
             output_data.to_csv(output_file, index=False)
             end = time.time()
-            logger.info(f"Output computed for {minsan_code} drug in {round_n(end - start, 3)} s.")
+            logger.info(f"Output computed for {minsan_code} drug in {round(end - start, 3)} s.")
             logger.info(f"Results written in {output_file}.")

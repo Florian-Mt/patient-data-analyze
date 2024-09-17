@@ -1,6 +1,5 @@
 import pandas
 
-from utils.round_n import round_n
 from .compute_adherence_numerator import compute_adherence_numerator
 from .compute_average_days import compute_average_days
 from .compute_delays import compute_delays
@@ -49,7 +48,7 @@ def compute_dataframe_for_minsan(input_data, mixed_minsan=False):
     # Compute adherence numerator and denominator
     adherence_numerator = input_data_grouped_by_user.apply(compute_adherence_numerator, include_groups=False).values
     adherence_denominator = (output_data["DATA ULTIMA CONSEGNA"] - output_data["DATA PRIMA CONSEGNA"]).dt.days
-    adherence = round_n(100 * (adherence_numerator / adherence_denominator))
+    adherence = round(100 * (adherence_numerator / adherence_denominator), 2)
 
     # Compute the adherence
     output_data["ADERENZA"] = adherence
