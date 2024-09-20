@@ -1,11 +1,11 @@
 """
-Generate prompt based on provided patient data
+Generate training prompt based on provided patient data
 """
 
 
-def generate_prompt(patient):
+def generate_training_prompt(patient):
     """
-    Generate prompt based on provided patient's data
+    Generate training prompt based on provided patient's data
     :param patient: patient's data
     :return: generated prompt
     """

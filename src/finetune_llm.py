@@ -8,17 +8,17 @@ import os
 
 from datasets import Dataset
 
-from predict_patient_data.generate_prompt import generate_prompt
+from constants import BASE_MODEL_ID
+from predict_patient_data.generate_training_prompt import generate_training_prompt
 from predict_patient_data.load_accelerator import load_accelerator
 from predict_patient_data.load_model_config import load_model_config
+from predict_patient_data.load_peft_config import load_peft_config
 from predict_patient_data.load_tokenizer import load_tokenizer
 from predict_patient_data.print_trainable_parameters import print_trainable_parameters
 from predict_patient_data.retrieve_output_data import retrieve_output_data
 from predict_patient_data.tokenize_input import tokenize_input
 from predict_patient_data.train_model import train_model
 from utils.dir_path import dir_path
-
-BASE_MODEL_ID = "mistralai/Mistral-7B-v0.1"
 
 
 def getargs():
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     tokenizer = load_tokenizer(BASE_MODEL_ID)
 
     # Prepare the data for the fine-tuning
-    generate_and_tokenize_prompt = lambda patient: tokenize_input(tokenizer, generate_prompt(patient))
+    generate_and_tokenize_prompt = lambda patient: tokenize_input(tokenizer, generate_training_prompt(patient))
 
     tokenized_train_dataset = train_dataset.map(generate_and_tokenize_prompt)
     tokenized_eval_dataset = eval_dataset.map(generate_and_tokenize_prompt)
@@ -80,6 +80,7 @@ if __name__ == "__main__":
 
     # Load the model from the base model ID
     model = load_model_config(BASE_MODEL_ID)
+    model = load_peft_config(model)
     print_trainable_parameters(model)
 
     # Apply the accelerator
