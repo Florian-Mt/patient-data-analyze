@@ -11,7 +11,9 @@ This project aims to determine if an LLM can predict data on patients' treatment
 
 ## Computing data on patients
 
-Run `python src/generate_datasheets.py -f <YOUR_DATA_FILE.xlsx>`. For example, with the provided training file: `python src/generate_datasheets.py -f "./data/V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"`
+* Install required dependencies: `pip install .`
+* `python src/generate_datasheets.py -f <YOUR_DATA_FILE.xlsx> [-o <output_directory>]`
+  * For example, with the provided training file: `python src/generate_datasheets.py -f "./data/V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"`
 
 The generated datasheets will be in the `output` folder by default. Use `-o <path>` or `--output-dir <path>` to change output directory. The path is created if necessary.
 
@@ -29,12 +31,15 @@ An equivalent non-Colab version is available (GPU required):
 * Provide `HF_TOKEN` as an environment variable
   * For example with Bash: `export HF_TOKEN=<your_token>`
   * Or as an IDE environment configuration
-* Run `python finetune_llm.py -f <input_file>`
+* Run `python src/finetune_llm.py -f <input_file> [-o <output_directory>]`
   * For example, with the previously generated output file: `python src/finetune_llm.py -f output/output_global.csv`
 
-## Using the fine-tuned model to make predictions
+## Using the fine-tuned model to make predictions and evaluate the prediction
 
-## Evaluate the prediction
+* Provide `HF_TOKEN` as an environment variable (see instructions in previous section)
+* Provide the fine-tuned model in `mistralai/Mistral-7B-v0.1-patient-data-analyze/`
+* Run `python src/predict_compare.py -f <input_file>`
+  * For example, with the previously generated output file: `python src/predict_compare.py -f output/output_global.csv`
 
 ## Code quality commands
 
