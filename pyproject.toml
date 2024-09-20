@@ -7,6 +7,7 @@ description = "Analyzing efficiency of patient therapies based on data in an Exc
 dependencies = [
     "pandas",
     "openpyxl",
+    "xlrd",
 ]
 dynamic = ["version"]
 readme = "README.md"
