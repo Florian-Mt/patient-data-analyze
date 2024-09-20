@@ -25,7 +25,7 @@ def getargs():
         type=argparse.FileType("r"),
         dest="input_file",
         metavar="<input data file>",
-        help="Input patients' data file",
+        help="Input patients datasheet file",
     )
     parser.add_argument(
         "-o", "--output-dir",
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     input_data = pandas.read_excel(args.input_file.name, parse_dates=["DT_EROG", "DT_NAS"], date_format="%d/%m/%Y")
     logger.info("Input file read successfully.")
 
-    # Then do the same for all data
+    # Compute resulting data and generate a CSV file fro all drugs mixed
     logger.info("")
     start = time.time()
     output_data = compute_dataframe_for_minsan(input_data, mixed_minsan=True)
@@ -66,8 +66,8 @@ if __name__ == "__main__":
     logger.info(f"Output computed for all drugs in {round(end - start, 3)} s.")
     logger.info(f"Results written in {output_file}.")
 
+    # Then do the same for each drug (MINSAN code) apart
     if args.export_minsan_files:
-        # For each MINSAN code, compute resulting data and generate a CSV file
         for minsan_code in input_data["MINSAN"].unique():
             logger.info("")
             start = time.time()

@@ -33,7 +33,7 @@ def getargs():
         type=argparse.FileType("r"),
         dest="input_file",
         metavar="<input data file>",
-        help="Number of individuals in each population",
+        help="Generated datasheet file (with patient adherence and follow-up persistence)",
     )
     parser.add_argument(
         "-o", "--output-dir",
