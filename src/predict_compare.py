@@ -10,7 +10,7 @@ from datasets import Dataset
 from peft import PeftModel
 import torch
 
-from constants import BASE_MODEL_ID
+from constants import BASE_MODEL_ID, FINETUNED_MODEL_ID
 from predict_patient_data.generate_prediction_prompt import generate_prediction_prompt
 from predict_patient_data.load_model_config import load_model_config
 from predict_patient_data.load_tokenizer import load_tokenizer
@@ -51,10 +51,10 @@ if __name__ == "__main__":
 
     # Load the model from the base model ID and load last PEFT checkpoint
     model = load_model_config(BASE_MODEL_ID)
-    model = PeftModel.from_pretrained(model, f"{BASE_MODEL_ID}-patient-data-analyze/checkpoint-750")
+    model = PeftModel.from_pretrained(model, FINETUNED_MODEL_ID)
 
     # Load the tokenizer
-    tokenizer = load_tokenizer(BASE_MODEL_ID, local_files_only=True)
+    tokenizer = load_tokenizer(FINETUNED_MODEL_ID, local_files_only=True)
 
     # Prepare the data for predictions
     inputs = dataset.map(generate_prediction_prompt)
