@@ -1,10 +1,11 @@
 """
-Compute adherence and follow-up persistence for each patient in the base file
-Then predict the same values via LLM and compare with F1 and accuracy criterias if the values match
+Predict adherence and follow-up persistence for each patient in the base file via LLM
 """
 
 import argparse
+import json
 import logging
+import os
 
 from datasets import Dataset
 from peft import PeftModel
@@ -31,6 +32,15 @@ def getargs():
         metavar="<input data file>",
         help="Generated datasheet file (with patient adherence and follow-up persistence)",
     )
+    parser.add_argument(
+        "-o", "--output",
+        required=False,
+        type=argparse.FileType("w"),
+        default=os.path.join(os.getcwd(), "prediction_results.json"),
+        dest="output_file",
+        metavar="<output results file>",
+        help="Predictions made by the LLM for each patient",
+    )
     return parser.parse_args()
 
 
@@ -49,27 +59,36 @@ if __name__ == "__main__":
     # Convert the pandas dataframe into a pytorch tensor
     dataset = Dataset.from_pandas(output_data)
 
-    # Load the model from the base model ID and load last PEFT checkpoint
+    # Load the model from the base model ID and the PEFT result
     model = load_model_config(BASE_MODEL_ID)
     model = PeftModel.from_pretrained(model, FINETUNED_MODEL_ID)
 
     # Load the tokenizer
     tokenizer = load_tokenizer(FINETUNED_MODEL_ID, local_files_only=True)
+    logger.info("Model and tokenizer loaded successfully.")
 
-    # Prepare the data for predictions
-    inputs = dataset.map(generate_prediction_prompt)
-    logger.info("Dataset tokenized successfully.")
+    # Retrieve prediction results file
+    try:
+        data_file = open(args.output_file, "r", encoding="utf-8")
+        results = json.loads(data_file.read())
+        data_file.close()
+    except FileNotFoundError:
+        results = []
 
     # Make predictions with the fine-tuned model
-    results = []
-    for input in inputs:
-        #model_input = tokenizer(eval_prompt, return_tensors="pt").to("cuda")
-        model_input = tokenizer(input, return_tensors="pt").to("cuda")
-        model.eval()
-        with torch.no_grad():
-            result = tokenizer.decode(model.generate(**model_input, max_new_tokens=512)[0], skip_special_tokens=True)
-        result.append(result)
+    logger.info(f"{len(dataset)} patients to predict adherence and follow-up persistence.")
+    logger.info(f"Skipping {len(results)} patients: prediction already done.")
+    model.eval()
+    with torch.no_grad():
+        for i, patient in enumerate(dataset):
+            if i < len(results):
+                continue
 
-    # Evaluate predictions
-    #output_data["result"] = results
-    #output_data.
+            patient_input = generate_prediction_prompt(patient)
+            model_input = tokenizer(patient_input, return_tensors="pt").to("cuda")
+            result = tokenizer.decode(model.generate(**model_input, max_new_tokens=512)[0], skip_special_tokens=True)
+            results.append(result)
+
+            # Save this patient result
+            with open(args.output_file, "w", encoding="utf-8") as json_file:
+                print(json.dumps(results), file=json_file)
