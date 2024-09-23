@@ -75,8 +75,10 @@ if __name__ == "__main__":
 
     adherence_f1_score = f1_score(expected_adherence, predicted_adherence, average="macro")
     adherence_accuracy_score = accuracy_score(expected_adherence, predicted_adherence)
+    print("Adherence (F1 score and accuracy score)")
     print(adherence_f1_score, adherence_accuracy_score)
 
     follow_up_persistence_f1_score = f1_score(expected_follow_up_persistence, predicted_follow_up_persistence, average="macro")
     follow_up_persistence_accuracy_score = accuracy_score(expected_follow_up_persistence, predicted_follow_up_persistence)
+    print("Follow-up persistence (F1 score and accuracy score)")
     print(follow_up_persistence_f1_score, follow_up_persistence_accuracy_score)
