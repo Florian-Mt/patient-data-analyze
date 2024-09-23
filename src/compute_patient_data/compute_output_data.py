@@ -13,6 +13,7 @@ from .compute_minsan_changes import compute_minsan_changes
 from .compute_persistence import compute_persistence
 from .first_prod import first_prod
 from .sum_importomov import sum_importomov
+from utils.parse_datetime import parse_datetime
 
 
 def compute_dataframe_for_minsan(input_data: DataFrame, mixed_minsan=False):
@@ -24,6 +25,8 @@ def compute_dataframe_for_minsan(input_data: DataFrame, mixed_minsan=False):
     """
     # Group input_data lines by patient unique identifier
     input_data_grouped_by_user = input_data.groupby("CODICE PAZIENTE UNIVOCO")
+    max_delivery_date = input_data["DT_EROG"].max()
+    max_delivery_date = parse_datetime(max_delivery_date)
 
     output_data = input_data_grouped_by_user.agg({
         "SESSO": "first",
@@ -75,8 +78,11 @@ def compute_dataframe_for_minsan(input_data: DataFrame, mixed_minsan=False):
     output_data["INTERMEDIA ADERENZA"] = ((40 <= adherence) & (adherence < 80)).astype(int)
     output_data["ALTA ADERENZA"] = (adherence >= 80).astype(int)
 
+    def wrapper_follow_up_persistence(group: DataFrame):
+        return compute_follow_up_persistence(max_delivery_date, group)
+
     output_data["PERSISTENZA"] = input_data_grouped_by_user.apply(compute_persistence).values
-    output_data["Persistenza di Follow-up"] = input_data_grouped_by_user.apply(compute_follow_up_persistence).values
+    output_data["Persistenza di Follow-up"] = input_data_grouped_by_user.apply(wrapper_follow_up_persistence).values
 
     output_data["IMPORTOMOV"] = input_data_grouped_by_user.apply(sum_importomov, include_groups=False).values
 
