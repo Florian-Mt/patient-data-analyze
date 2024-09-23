@@ -4,16 +4,17 @@ authors = [
 ]
 name = "patient-data-analyse"
 description = "Analyzing efficiency of patient therapies based on data in an Excel file and exporting computed results in CSV files, then fine-tuning an LLM to predict adherence and follow-up persistence of treatments on patients based on their demographic information"
-dependencies = [
-    "pandas",
-    "openpyxl",
-    "xlrd",
-]
+dependencies = []
 dynamic = ["version"]
 readme = "README.md"
 requires-python = ">= 3.12"
 
 [project.optional-dependencies]
+compute = [
+    "pandas",
+    "openpyxl",
+    "xlrd",
+]
 llm = [
     "accelerate",
     "bitsandbytes",
@@ -22,6 +23,7 @@ llm = [
     "torch",
     "transformers",
 ]
+compare = ["scikit-learn"]
 quality = [
     "black",
     "flake8",

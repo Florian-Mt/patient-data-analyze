@@ -43,6 +43,7 @@ An equivalent non-Colab version is available (GPU required):
 
 ## Evaluate the predictions
 
+* Install required dependencies `pip install ".[compare]"`
 * Run `python src/compare_results.py -f <input_file> -p <predictions_file>`
   * For example, with the previously generated output and result files: `python src/compare_results.py -f output/output_global.csv -p output/predictions.json`
 

@@ -5,6 +5,9 @@ Compare the predicted values with the real values with F1 and accuracy criteria 
 import argparse
 import json
 import logging
+import re
+
+from sklearn.metrics import f1_score, accuracy_score
 
 from predict_patient_data.retrieve_output_data import retrieve_output_data
 
@@ -43,12 +46,37 @@ if __name__ == "__main__":
 
     # Retrieve the output data as a dataframe with unused columns filtered out
     output_data = retrieve_output_data(args.input_file)
+    # output_data = output_data.to_dict(orient="records")
     logger.info("Output file loaded successfully.")
 
+    # Extract useful data
+    expected_adherence = output_data["ADERENZA"].to_list()
+    expected_follow_up_persistence = output_data["Persistenza di Follow-up"].to_list()
+
     # Retrieve the predictions file
-    predictions_data = json(args.predictions_file)
+    predictions_data = json.load(args.predictions_file)
     logger.info("Predictions file loaded successfully.")
 
+    # Collect adherence and follow-up persistence for each patient
+    predicted_adherence = []
+    predicted_follow_up_persistence = []
+
     # Evaluate predictions
-    #output_data["result"] = results
-    #output_data.
+    pattern = re.compile(r"adherence: (\d+)\n\s+persistence follow-up: (\d+)")
+    for i, prediction in enumerate(predictions_data):
+        match = pattern.match(prediction)
+        if match:
+            predicted_adherence.append(int(match[1]))
+            predicted_follow_up_persistence.append(int(match[2]))
+
+        else:
+            expected_adherence.pop(i)
+            expected_follow_up_persistence.pop(i)
+
+    adherence_f1_score = f1_score(expected_adherence, predicted_adherence, average="macro")
+    adherence_accuracy_score = accuracy_score(expected_adherence, predicted_adherence)
+    print(adherence_f1_score, adherence_accuracy_score)
+
+    follow_up_persistence_f1_score = f1_score(expected_follow_up_persistence, predicted_follow_up_persistence, average="macro")
+    follow_up_persistence_accuracy_score = accuracy_score(expected_follow_up_persistence, predicted_follow_up_persistence)
+    print(follow_up_persistence_f1_score, follow_up_persistence_accuracy_score)
