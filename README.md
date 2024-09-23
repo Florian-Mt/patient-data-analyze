@@ -10,7 +10,7 @@ This project aims to determine if an LLM can predict data on patients' treatment
 
 ## Computing data on patients
 
-* Install required dependencies: `pip install ".[compute]"` (or `python -m pip install ".[computation]"`)
+* Install required dependencies: `pip install ".[compute]"` (or `python -m pip install ".[compute]"`)
 * `python src/generate_datasheets.py -f <YOUR_DATA_FILE.xlsx> [-o <output_directory>]`
   * For example, with the provided training file: `python src/generate_datasheets.py -f "./data/V3 estrazione dati antiemicranici al 9-5-24 con PDD.xlsx"`
 
