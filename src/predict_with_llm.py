@@ -7,9 +7,9 @@ import json
 import logging
 import os
 
+import torch
 from datasets import Dataset
 from peft import PeftModel
-import torch
 
 from constants import BASE_MODEL_ID, FINETUNED_MODEL_ID
 from predict_patient_data.generate_prediction_prompt import generate_prediction_prompt

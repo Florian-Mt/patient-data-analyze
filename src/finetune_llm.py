@@ -72,7 +72,9 @@ if __name__ == "__main__":
     tokenizer = load_tokenizer(BASE_MODEL_ID)
 
     # Prepare the data for the fine-tuning
-    generate_and_tokenize_prompt = lambda patient: tokenize_input(tokenizer, generate_training_prompt(patient))
+    def generate_and_tokenize_prompt(patient):
+        """Generate tokenized input based on patient dict"""
+        return tokenize_input(tokenizer, generate_training_prompt(patient))
 
     tokenized_train_dataset = train_dataset.map(generate_and_tokenize_prompt)
     tokenized_eval_dataset = eval_dataset.map(generate_and_tokenize_prompt)

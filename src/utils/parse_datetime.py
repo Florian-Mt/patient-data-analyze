@@ -1,4 +1,5 @@
 """
+Parse string datetime into pandas Timestamp object
 """
 
 import pandas
@@ -10,7 +11,7 @@ def parse_datetime(dt):
     :param dt: datetime as str or pandas.Timestamp
     :return: pandas.Timestamp object
     """
-    if type(dt) is str:
+    if isinstance(dt, str):
         return pandas.Timestamp.fromisoformat(dt)
 
     return dt
